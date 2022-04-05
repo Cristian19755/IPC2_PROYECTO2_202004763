@@ -1,6 +1,7 @@
 from lista import Lista as Lista
 from xml.dom import minidom
 from tkinter import filedialog, Tk
+import generarMapa
 
 class Main:
     def menu(self):
@@ -34,6 +35,7 @@ class Main:
                 exit()
             x= x-1
             z = MisionesRescate.extraer_dato(x)
+            a = UMRescate.extraer_dato(x)
             for i in range(0, z.cantidad_de_datos()):
                 n = z.extraer_dato(i)
                 CElegida.insertar_fin(n)
@@ -85,6 +87,9 @@ class Main:
         for i in range(0,z.cantidad_de_datos()):
             n = z.extraer_dato(i)
             RElegido.insertar_fin(n)
+        print(CElegida, RElegido)
+        M.graficarCiudad('recursos')
+        
 
     def menuRescate(self):
         print('****Seleccione un ChapinRescue****\n  0. Salir')
@@ -100,7 +105,8 @@ class Main:
         z = ChapinRescues.extraer_dato(x)
         for i in range(0,z.cantidad_de_datos()):
             n = z.extraer_dato(i)
-            RElegido.insertar_fin(n)    
+            RElegido.insertar_fin(n)  
+        M.graficarCiudad('rescate')  
 
     def leerArchivo(self):
         a = self.archivo
@@ -206,7 +212,47 @@ class Main:
         for i in range(0, MatrizF.cantidad_de_datos()):
             r = MatrizF.extraer_dato(i)
             CElegida.insertar_fin(r)
-          
+    
+    def graficarCiudad(self, mision):
+        cells = ''
+        rows = ''
+        celdaNT='''<TD BGCOLOR="BLACK">       </TD>'''
+        celdaT='''<TD BGCOLOR="WHITE">       </TD>'''
+        celdaE='''<TD BGCOLOR="GREEN">       </TD>'''
+        CeldaUM='''<TD BGCOLOR="RED">       </TD>'''
+        celdaUC='''<TD BGCOLOR="BLUE">       </TD>'''
+        celdaR='''<TD BGCOLOR="GRAY">       </TD>'''
+        nombre = 'MISIONCHAPINWARRIORS'
+        descripcion = ''
+        CapacidadF = ''
+        for i in range(0,RElegido.cantidad_de_datos()):
+            CapacidadF = RElegido.extraer_dato(i)
+        if mision == 'rescate':
+            descripcion = descripcion + 'Tipo de mision: Rescate\nUnidad Civil Rescatada: \nRobot Utilizado: '+ RElegido.extraer_dato(0)+')'
+        elif mision == 'recursos':
+            descripcion = descripcion + 'Tipo de mision: Extracción de recursos\nRecurso Extraido: \nRobot Utilizado: '+RElegido.extraer_dato(0)+'\nCapacidad de combate inicial '+RElegido.extraer_dato(2)+', Capacidad de combate final '+ CapacidadF+')'
+        
+
+        for fila in range(0,CElegida.cantidad_de_datos()):
+            cadena = CElegida.extraer_dato(fila)
+            for letra in cadena:
+                if letra =='h' or letra=='H':
+                    cells = cells + celdaT
+                elif letra =='*':
+                    cells = cells + celdaNT
+                elif letra == 'E' or letra == 'e':
+                    cells = cells + celdaE
+                elif letra == 'M' or letra == 'm':
+                    cells = cells + CeldaUM
+                elif letra == 'C' or letra == 'c':
+                    cells = cells + celdaUC
+                elif letra == 'R' or letra == 'r':
+                    cells = cells + celdaR
+            rows = rows + '''<TR>''' + cells +'''</TR>'''
+            cells = ''
+        generarMapa.graficar.grafica(rows, nombre, descripcion)
+
+
 CNRescue = Lista()
 CNRecursos = Lista()
 MisionesRescate = Lista()
