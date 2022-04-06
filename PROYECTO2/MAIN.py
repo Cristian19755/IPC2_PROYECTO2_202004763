@@ -219,6 +219,7 @@ class Main:
     def pathfindingRescue(self):
         openSet = Lista()
         celdaIN = Lista()
+        celdaOUT = Lista()
         contador = 0
         for i in range(0,CElegida.cantidad_de_datos()):
             x = CElegida.extraer_dato(i)
@@ -241,9 +242,38 @@ class Main:
             m =int(input())-1
         else:
             m = 0
+        
+        for i in range(0,CElegida.cantidad_de_datos()):
+            x = CElegida.extraer_dato(i)
+            for j in x:
+                if j == 'C' or j == 'c':
+                    celda = Lista()
+                    celda.insertar_fin(contador)
+                    celda.insertar_fin(i)
+                    celdaOUT.insertar_fin(celda)
+                    print(celdaOUT)
+                contador = contador + 1
+            contador = 0
+            
+        if celdaOUT.cantidad_de_datos() != 1:
+            print('****Seleccione una unidad civil****\n  0. Salir')
+            for i in range(0,celdaOUT.cantidad_de_datos()):
+                x = celdaOUT.extraer_dato(i).extraer_dato(0)
+                y = celdaOUT.extraer_dato(i).extraer_dato(1)
+                opcion = '\n  '+str(i+1)+'. '+str(x)+', '+str(y)
+                print(opcion)
+            n =int(input())-1
+        else:
+            n = 0
+
+        for i in range(0, celdaOUT.cantidad_de_datos()):
+            if i != n:
+                M.modificarXY(celdaOUT.extraer_dato(i).extraer_dato(0),celdaOUT.extraer_dato(i).extraer_dato(1), 'H') 
+
         Terminado = False
         inicio = celdaIN.extraer_dato(m)
         openSet.insertar_fin(inicio)
+
         while Terminado == False:
             if openSet.cantidad_de_datos() != 0:
                 arriba = Lista()
@@ -265,24 +295,32 @@ class Main:
                         arriba.insertar_fin(arribax)
                         arriba.insertar_fin(arribay)
                         openSet.insertar_fin(arriba)
+                else:
+                    arribaxy = None
                 if abajoy > 0:
                     abajoxy = M.posicionxy(abajox, abajoy)
                     if abajoxy != '*' and abajoxy != 'M' and abajoxy != 'A':
                         abajo.insertar_fin(abajox)
                         abajo.insertar_fin(abajoy)
                         openSet.insertar_fin(abajo)
+                else: 
+                    abajoxy = None
                 if derechax > 0:
                     derechaxy = M.posicionxy(derechax, derechay)
                     if derechaxy != '*' and derechaxy != 'M' and derechaxy != 'A':
                         derecha.insertar_fin(derechax)
                         derecha.insertar_fin(derechay)
                         openSet.insertar_fin(derecha)
+                else: 
+                    derechaxy = None
                 if izquierdax > 0:
                     izquierdaxy = M.posicionxy(izquierdax, izquierday)
                     if izquierdaxy != '*' and izquierdaxy != 'M' and izquierdaxy != 'A':
                         izquierda.insertar_fin(izquierdax)
                         izquierda.insertar_fin(izquierday)
                         openSet.insertar_fin(izquierda)
+                else:
+                    izquierdaxy = None
                 if arribaxy == '*' or arribaxy == 'M' or arribaxy == 'A':
                     if abajoxy == '*' or abajoxy == 'M' or abajoxy == 'A':
                         if izquierdaxy == '*' or izquierdaxy == 'M' or izquierdaxy == 'A':
@@ -320,10 +358,13 @@ class Main:
             x = inicio.extraer_dato(0)
             y = inicio.extraer_dato(1)
             M.modificarXY(x,y,'E')
+            for i in range(0, celdaOUT.cantidad_de_datos()):
+                M.modificarXY(celdaOUT.extraer_dato(i).extraer_dato(0),celdaOUT.extraer_dato(i).extraer_dato(1), 'C') 
 
     def pathfindinRecurso(self):
         openSet = Lista()
         celdaIN = Lista()
+        celdaOUT = Lista()
         contador = 0
         for i in range(0,CElegida.cantidad_de_datos()):
             x = CElegida.extraer_dato(i)
@@ -346,6 +387,33 @@ class Main:
             m =int(input())-1
         else:
             m = 0
+        for i in range(0,CElegida.cantidad_de_datos()):
+            x = CElegida.extraer_dato(i)
+            for j in x:
+                if j == 'R' or j == 'r':
+                    celda = Lista()
+                    celda.insertar_fin(contador)
+                    celda.insertar_fin(i)
+                    celdaOUT.insertar_fin(celda)
+                contador = contador + 1
+            contador = 0
+            
+        if celdaOUT.cantidad_de_datos() != 1:
+            print('****Seleccione una unidad de recursos****\n  0. Salir')
+            for i in range(0,celdaOUT.cantidad_de_datos()):
+                x = celdaOUT.extraer_dato(i).extraer_dato(0)
+                y = celdaOUT.extraer_dato(i).extraer_dato(1)
+                opcion = '\n  '+str(i+1)+'. '+str(x)+', '+str(y)
+                print(opcion)
+            n =int(input())-1
+        else:
+            n = 0
+
+        for i in range(0, celdaOUT.cantidad_de_datos()):
+            if i != n:
+                M.modificarXY(celdaOUT.extraer_dato(i).extraer_dato(0),celdaOUT.extraer_dato(i).extraer_dato(1), 'H')
+                k = M.posicionxy(celdaOUT.extraer_dato(i).extraer_dato(0),celdaOUT.extraer_dato(i).extraer_dato(1))
+                print(k)
         Terminado = False
         inicio = celdaIN.extraer_dato(m)
         openSet.insertar_fin(inicio)
@@ -370,29 +438,37 @@ class Main:
                         arriba.insertar_fin(arribax)
                         arriba.insertar_fin(arribay)
                         openSet.insertar_fin(arriba)
+                else:
+                    arribaxy = None
                 if abajoy > 0:
                     abajoxy = M.posicionxy(abajox, abajoy)
                     if abajoxy != '*' and abajoxy != 'M' and abajoxy != 'A':
                         abajo.insertar_fin(abajox)
                         abajo.insertar_fin(abajoy)
                         openSet.insertar_fin(abajo)
+                else:
+                    abajoxy = None
                 if derechax > 0:
                     derechaxy = M.posicionxy(derechax, derechay)
                     if derechaxy != '*' and derechaxy != 'M' and derechaxy != 'A':
                         derecha.insertar_fin(derechax)
                         derecha.insertar_fin(derechay)
                         openSet.insertar_fin(derecha)
+                else:
+                    derechaxy = None
                 if izquierdax > 0:
                     izquierdaxy = M.posicionxy(izquierdax, izquierday)
                     if izquierdaxy != '*' and izquierdaxy != 'M' and izquierdaxy != 'A':
                         izquierda.insertar_fin(izquierdax)
                         izquierda.insertar_fin(izquierday)
                         openSet.insertar_fin(izquierda)
+                else:
+                    izquierdaxy = None
                 if arribaxy == '*' or arribaxy == 'M' or arribaxy == 'A':
                     if abajoxy == '*' or abajoxy == 'M' or abajoxy == 'A':
                         if izquierdaxy == '*' or izquierdaxy == 'M' or izquierdaxy == 'A':
                             if derechaxy == '*' or derechaxy == 'M' or derechaxy == 'A':
-                                M.modificarXY(celda.extraer_dato(0),celda.extraer_dato(1),'*')
+                                M.modificarXY(celda.extraer_dato(0),celda.extraer_dato(1),' ')
                             else:
                                 M.modificarXY(celda.extraer_dato(0),celda.extraer_dato(1),'A')
                         else:
@@ -425,6 +501,8 @@ class Main:
             x = inicio.extraer_dato(0)
             y = inicio.extraer_dato(1)
             M.modificarXY(x,y,'E')
+            for i in range(0, celdaOUT.cantidad_de_datos()):
+                M.modificarXY(celdaOUT.extraer_dato(i).extraer_dato(0),celdaOUT.extraer_dato(i).extraer_dato(1), 'R')
 
     def modificarXY(self, x, y, dato):
         MatrizF = Lista()
