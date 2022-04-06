@@ -236,7 +236,7 @@ class Main:
             for i in range(0,celdaIN.cantidad_de_datos()):
                 x = celdaIN.extraer_dato(i).extraer_dato(0)
                 y = celdaIN.extraer_dato(i).extraer_dato(1)
-                opcion = '\n  '+str(i+1)+'. '+x+', '+y
+                opcion = '\n  '+str(i+1)+'. '+str(x)+', '+str(y)
                 print(opcion)
             m =int(input())-1
         else:
@@ -341,7 +341,7 @@ class Main:
             for i in range(0,celdaIN.cantidad_de_datos()):
                 x = celdaIN.extraer_dato(i).extraer_dato(0)
                 y = celdaIN.extraer_dato(i).extraer_dato(1)
-                opcion = '\n  '+str(i+1)+'. '+x+', '+y
+                opcion = '\n  '+str(i+1)+'. '+str(x)+', '+str(y)
                 print(opcion)
             m =int(input())-1
         else:
