@@ -272,6 +272,7 @@ class Main:
 
         Terminado = False
         inicio = celdaIN.extraer_dato(m)
+        final = celdaOUT.extraer_dato(n)
         openSet.insertar_fin(inicio)
 
         while Terminado == False:
@@ -334,19 +335,19 @@ class Main:
                         M.modificarXY(celda.extraer_dato(0),celda.extraer_dato(1),'A')
                 else:
                     M.modificarXY(celda.extraer_dato(0),celda.extraer_dato(1),'A')
-                if arribaxy == 'C' :
+                if arribax == final.extraer_dato(0) and arribay == final.extraer_dato(1) :
                     Terminado = True
                     XYF.insertar_fin(arribax)
                     XYF.insertar_fin(arribay)
-                elif abajoxy == 'C' :
+                elif abajox == final.extraer_dato(0) and abajoy == final.extraer_dato(1) :
                     Terminado = True
                     XYF.insertar_fin(abajox)
                     XYF.insertar_fin(abajoy)
-                elif izquierdaxy == 'C': 
+                elif izquierdax == final.extraer_dato(0) and izquierday == final.extraer_dato(1) : 
                     Terminado = True
                     XYF.insertar_fin(izquierdax)
                     XYF.insertar_fin(izquierday)
-                elif derechaxy == 'C':
+                elif derechax == final.extraer_dato(0) and derechay == final.extraer_dato(1):
                     Terminado = True
                     XYF.insertar_fin(derechax)
                     XYF.insertar_fin(derechay)
